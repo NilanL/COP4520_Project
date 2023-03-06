@@ -2,21 +2,21 @@ import java.util.*;
 
 public class Main {
 
-    public static void printArray(Integer [] array)
+    public static void printArray(String [] array)
     {
         System.out.print("[ ");
-        for (Integer val : array)
+        for (String val : array)
         {
             System.out.print(val + " ");
         }
         System.out.println("]");
     }
 
-    public static void confirmSort(Integer [] array)
+    public static void confirmSort(String [] array)
     {
         for (int i = 0; i < array.length - 1; i++)
         {
-            if (array[i + 1] < array[i])
+            if (array[i + 1].compareTo(array[i]) < 0)
             {
                 System.out.println("ARRAY NOT SORTED DUMMY");
                 break;
@@ -24,11 +24,11 @@ public class Main {
         }
     }
 
-    public static void confirmSort(List<Integer> array)
+    public static void confirmSort(List<String> array)
     {
         for (int i = 0; i < array.size() - 1; i++)
         {
-            if (array.get(i + 1) < array.get(i))
+            if (array.get(i + 1).compareTo(array.get(i)) < 0)
             {
                 System.out.println("ARRAY NOT SORTED DUMMY");
                 break;
@@ -38,19 +38,22 @@ public class Main {
 
     public static void main(String [] args)
     {
-        int n = 10000000;
-        Integer [] array = new Integer [n];
+        int n = 100;
+        String [] array = new String [n];
 
         for (int i = 0; i < n; i++)
         {
             Random rand = new Random();
-            array[i] = Integer.valueOf(rand.nextInt(n));
+            String str = "";
+            for (int j = 0; j < rand.nextInt(9) + 1; j++)
+                str += (char)(rand.nextInt(26) + 97);
+            array[i] = str;
         }
-        Integer [] array2 = Arrays.copyOf(array, n);
+        String [] array2 = Arrays.copyOf(array, n);
 
-        //printArray(array);
+        printArray(array);
 
-        List<Integer> sortArray = Arrays.asList(array2);
+        List<String> sortArray = Arrays.asList(array2);
         long startTime = System.nanoTime();
         double execTime = 0;
         Collections.sort(sortArray);
