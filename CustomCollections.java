@@ -24,15 +24,36 @@ public class CustomCollections<T extends Comparable<T>>
         final int length = array.length;
 
         boolean exact = length % MAX_THREADS == 0;
-        int lengthPerThread = exact ? (length / MAX_THREADS) : (length / (MAX_THREADS - 1));
+        int lengthPerThread = 0;
+        
+        if (exact)
+        {
+            lengthPerThread = length / MAX_THREADS;
+        }
+        else
+        {
+            lengthPerThread = length / (MAX_THREADS - 1);
+        }
+        
         lengthPerThread = lengthPerThread < MAX_THREADS ? MAX_THREADS : lengthPerThread;
+
         final ArrayList<SortThreads<?>> threads = new ArrayList<>();
 
         for (int i = 0; i < length; i += lengthPerThread)
         {
             int beg = i;
             int remain = length - i;
-            int end = remain < lengthPerThread ? i + (remain - 1) : i + (lengthPerThread - 1); 
+            int end = 0;
+            
+            if (remain < lengthPerThread)
+            {
+                end = i + (remain - 1);
+            }
+            else
+            {
+                end = i + (lengthPerThread - 1);
+            }
+
             final SortThreads<?> t = new SortThreads<>(array, beg, end);
 
             threads.add(t);
