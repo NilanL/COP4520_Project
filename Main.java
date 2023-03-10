@@ -54,16 +54,16 @@ public class Main {
         //results -> Sort Type -- Array Type -- Array Length -- Thread Count
         double[][][][] results = CutsomSortComparison.compareSorts();
 
-        String[] headers = {"Array Length", "Custom Sort", "Collections.sort"};
+        String[] headers = {"Thread Count", "Custom Sort", "Collections.sort"};
         String[][] data = new String[results[0][0].length + 1][headers.length];
         data[0] = headers;
         
         for (int type=0; type<CutsomSortComparison.arrTypes.length; type++) {
-            for (int threads=0; threads<CutsomSortComparison.threadCounts.length; threads++) {
-                for (int i=0; i<results[0][0].length; i++) {
-                    data[i+1][0] = Integer.toString(CutsomSortComparison.arrLengths[i]);
-                    data[i+1][1] = Double.toString(results[0][type][i][threads]);
-                    data[i+1][2] = Double.toString(results[1][type][i][threads]);
+            for (int n=0; n<results[0][0].length; n++) {
+                for (int threads=0; threads<CutsomSortComparison.threadCounts.length; threads++) {
+                    data[threads+1][0] = Integer.toString(CutsomSortComparison.threadCounts[threads]);
+                    data[threads+1][1] = Double.toString(results[0][type][n][threads]);
+                    data[threads+1][2] = Double.toString(results[1][type][n][threads]);
                 }
                 File typeDir = new File("Data/" + CutsomSortComparison.arrTypes[type].getSimpleName());
                 if (!typeDir.exists())
@@ -71,7 +71,7 @@ public class Main {
 
                 String fileName = "./Data/" +
                                 CutsomSortComparison.arrTypes[type].getSimpleName() + "/" +
-                                CutsomSortComparison.threadCounts[threads] + "threads";
+                                CutsomSortComparison.arrLengths[n] + "_elements";
 
                 File csvData = new File(fileName + ".csv");
                 if (!csvData.exists())
