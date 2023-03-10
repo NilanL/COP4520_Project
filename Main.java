@@ -1,4 +1,12 @@
 import java.util.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.File;
 
 public class Main {
 
@@ -38,39 +46,110 @@ public class Main {
 
     public static void main(String [] args)
     {
-        int n = 100;
-        String [] array = new String [n];
+        File dataDir = new File("Data");
+        if (!dataDir.exists())
+            dataDir.mkdir();
+        
 
-        for (int i = 0; i < n; i++)
-        {
-            Random rand = new Random();
-            String str = "";
-            for (int j = 0; j < rand.nextInt(9) + 1; j++)
-                str += (char)(rand.nextInt(26) + 97);
-            array[i] = str;
+        //results -> Sort Type -- Array Type -- Array Length -- Thread Count
+        double[][][][] results = CutsomSortComparison.compareSorts();
+
+        String[] headers = {"Array Length", "Custom Sort", "Collections.sort"};
+        String[][] data = new String[results[0][0].length + 1][headers.length];
+        data[0] = headers;
+        
+        for (int type=0; type<CutsomSortComparison.arrTypes.length; type++) {
+            for (int threads=0; threads<CutsomSortComparison.threadCounts.length; threads++) {
+                for (int i=0; i<results[0][0].length; i++) {
+                    data[i+1][0] = Integer.toString(CutsomSortComparison.arrLengths[i]);
+                    data[i+1][1] = Double.toString(results[0][type][i][threads]);
+                    data[i+1][2] = Double.toString(results[1][type][i][threads]);
+                }
+                File typeDir = new File("Data/" + CutsomSortComparison.arrTypes[type].getSimpleName());
+                if (!typeDir.exists())
+                    typeDir.mkdir();
+
+                String fileName = "./Data/" +
+                                CutsomSortComparison.arrTypes[type].getSimpleName() + "/" +
+                                CutsomSortComparison.threadCounts[threads] + "threads";
+
+                File csvData = new File(fileName + ".csv");
+                if (!csvData.exists())
+                    try {
+                        csvData.createNewFile();
+                    } catch (Exception e) {e.printStackTrace();}
+
+                try (FileWriter writer = new FileWriter(csvData)) {
+                    for (String[] row : data) {
+                        writer.write(String.join(",", row) + "\n");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                XSSFWorkbook workbook = new XSSFWorkbook();
+                XSSFSheet sheet = workbook.createSheet("Comparison of Sorts");
+
+                int rowNum = 0;
+                for (String[] row : data) {
+                    XSSFRow sheetRow = sheet.createRow(rowNum++);
+                    int colNum = 0;
+                    for (String field : row) {
+                        XSSFCell cell = sheetRow.createCell(colNum++);
+                        cell.setCellValue(field);
+                    }
+                }
+
+                File xlsxData = new File(fileName + ".xlsx");
+                if (!xlsxData.exists())
+                    try {
+                        xlsxData.createNewFile();
+                    } catch (Exception e) {e.printStackTrace();}
+
+                try (FileOutputStream outputStream = new FileOutputStream(xlsxData)) {
+                    workbook.write(outputStream);
+                    workbook.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    }
+                
+            }
         }
-        String [] array2 = Arrays.copyOf(array, n);
 
-        printArray(array);
+        // CutsomSortComparison.compareSorts();
+        // int n = 100;
+        // String [] array = new String [n];
 
-        List<String> sortArray = Arrays.asList(array2);
-        long startTime = System.nanoTime();
-        double execTime = 0;
-        Collections.sort(sortArray);
-        execTime = (System.nanoTime() - startTime) / 1000000.0;
+        // for (int i = 0; i < n; i++)
+        // {
+        //     Random rand = new Random();
+        //     String str = "";
+        //     for (int j = 0; j < rand.nextInt(9) + 1; j++)
+        //         str += (char)(rand.nextInt(26) + 97);
+        //     array[i] = str;
+        // }
+        // String [] array2 = Arrays.copyOf(array, n);
 
-        long startTime2 = System.nanoTime();
-        double execTime2 = 0;
-        CustomCollections.sort(array);
-        execTime2 = (System.nanoTime() - startTime2) / 1000000.0;
+        // printArray(array);
 
-        confirmSort(sortArray);
-        confirmSort(array);
+        // List<String> sortArray = Arrays.asList(array2);
+        // long startTime = System.nanoTime();
+        // double execTime = 0;
+        // Collections.sort(sortArray);
+        // execTime = (System.nanoTime() - startTime) / 1000000.0;
 
-        System.out.println("Collections.sort() " + execTime);
-        //printArray(array);
+        // long startTime2 = System.nanoTime();
+        // double execTime2 = 0;
+        // CustomCollections.sort(array);
+        // execTime2 = (System.nanoTime() - startTime2) / 1000000.0;
 
-        System.out.println("CustomCollections.sort() " + execTime2);
-        //printArray(array2);
+        // confirmSort(sortArray);
+        // confirmSort(array);
+
+        // System.out.println("Collections.sort() " + execTime);
+        // //printArray(array);
+
+        // System.out.println("CustomCollections.sort() " + execTime2);
+        // //printArray(array2);
     }
 }

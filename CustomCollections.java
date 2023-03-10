@@ -2,7 +2,7 @@ import java.util.*;
 
 public class CustomCollections<T extends Comparable<T>>
 {
-    private static final int MAX_THREADS = 4;
+    private static int MAX_THREADS = 4;
     
     private static class SortThreads<T extends Comparable<T>> extends Thread
     {
@@ -132,5 +132,9 @@ public class CustomCollections<T extends Comparable<T>>
         {
             array[i] = (T)temp[i - begin];
         }
+    }
+
+    public static void setMaxThreads(int num) {
+        MAX_THREADS = num;
     }
 }
