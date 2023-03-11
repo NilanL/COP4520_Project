@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Collections;
+import java.util.Arrays;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public class CutsomSortComparison {
@@ -14,18 +15,21 @@ public class CutsomSortComparison {
 
         for (int i=0; i<arrTypes.length; i++) {
             for (int j=0; j<arrLengths.length; j++) {
+                    Class type = arrTypes[i];
+                    int length = arrLengths[j];
+                    ArrayList<T> origList = createList(type, length);
+                    T[] origArr = origList.toArray((T[])new Comparable[origList.size()]);
+
                 for (int k=0; k<threadCounts.length; k++) {
                     System.out.println((i * (arrLengths.length * threadCounts.length) + (j * threadCounts.length) + k + 1) + "/"
                                         + (arrTypes.length * arrLengths.length * threadCounts.length) + 
                                         " " + arrTypes[i].getSimpleName() + " " + arrLengths[j] + " elements");
-
-                    Class type = arrTypes[i];
-                    int length = arrLengths[j];
                     int numThreads = threadCounts[k];
 
+                    ArrayList<T> list = new ArrayList<T>(origList);
+                    T[] arr = Arrays.copyOf(origArr, origArr.length);
+
                     CustomCollections.setMaxThreads(numThreads);
-                    ArrayList<T> list = createList(type, length);
-                    T[] arr = list.toArray((T[])new Comparable[list.size()]);
                     double startTime = System.nanoTime() * 1E-9;
                     CustomCollections.sort(arr);
                     double endTime = System.nanoTime() * 1E-9;

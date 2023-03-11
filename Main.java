@@ -55,11 +55,11 @@ public class Main {
         double[][][][] results = CutsomSortComparison.compareSorts();
 
         String[] headers = {"Thread Count", "Custom Sort", "Collections.sort"};
-        String[][] data = new String[results[0][0].length + 1][headers.length];
+        String[][] data = new String[CutsomSortComparison.threadCounts.length + 1][headers.length];
         data[0] = headers;
         
         for (int type=0; type<CutsomSortComparison.arrTypes.length; type++) {
-            for (int n=0; n<results[0][0].length; n++) {
+            for (int n=0; n<CutsomSortComparison.arrLengths.length; n++) {
                 for (int threads=0; threads<CutsomSortComparison.threadCounts.length; threads++) {
                     data[threads+1][0] = Integer.toString(CutsomSortComparison.threadCounts[threads]);
                     data[threads+1][1] = Double.toString(results[0][type][n][threads]);
