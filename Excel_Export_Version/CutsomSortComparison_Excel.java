@@ -1,10 +1,11 @@
+package Excel_Export_Version;
 import java.util.ArrayList;
 import java.lang.Math;
 import java.util.Collections;
 import java.util.Arrays;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public class CutsomSortComparison {
+public class CutsomSortComparison_Excel {
     public static final int maxStringLength = 10;
     public static final int[] arrLengths = {10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
     public static final int[] threadCounts = {1, 2, 3, 4, 5, 6, 7, 8};
@@ -29,9 +30,9 @@ public class CutsomSortComparison {
                     ArrayList<T> list = new ArrayList<T>(origList);
                     T[] arr = Arrays.copyOf(origArr, origArr.length);
 
-                    CustomCollections.setMaxThreads(numThreads);
+                    CustomCollections_Excel.setMaxThreads(numThreads);
                     double startTime = System.nanoTime() * 1E-9;
-                    CustomCollections.sort(arr);
+                    CustomCollections_Excel.sort(arr);
                     double endTime = System.nanoTime() * 1E-9;
                     double executionTime = endTime - startTime;
                     results[0][i][j][k] = executionTime;
