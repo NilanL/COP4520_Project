@@ -10,7 +10,10 @@ public class CustomCollections<T extends Comparable<T>>
         {
             super (
                 () -> {
-                    CustomCollections.mergeSort(array, begin, end);
+                    if (array.length > 750)
+                        CustomCollections.mergeSort(array, begin, end);
+                    else
+                        CustomCollections.insertionSort(array);
                 }
             );
 
@@ -79,7 +82,7 @@ public class CustomCollections<T extends Comparable<T>>
             merge(array, 0, mid, end);
         }
     }
- 
+
     // Typical recursive merge sort
     public static <T extends Comparable<T>> void mergeSort(T[] array, int begin, int end)
     {
@@ -89,6 +92,25 @@ public class CustomCollections<T extends Comparable<T>>
             mergeSort(array, begin, mid);
             mergeSort(array, mid + 1, end);
             merge(array, begin, mid, end);
+        }
+    }
+
+    // Typical iterative insertion sort
+    public static <T extends Comparable<T>> void insertionSort(T arr[])
+    {
+        int n = arr.length;
+        for (int i = 1; i < n; ++i) 
+        {
+            T key = arr[i];
+            int j = i - 1;
+            
+            while (j >= 0 && arr[j].compareTo(key) > 0) 
+            {
+                arr[j + 1] = arr[j];
+                j = j - 1;
+            }
+
+            arr[j + 1] = key;
         }
     }
     

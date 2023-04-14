@@ -1,5 +1,6 @@
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.*;
 import java.io.File;
 
 public class Main {
@@ -37,9 +38,42 @@ public class Main {
     //         }
     //     }
     // }
-
+    
+    // public static int[] generateRandomArray(int n) 
+    // {
+    //     int[] arr = new int[n];
+    //     Random random = new Random();
+    //     for (int i = 0; i < n; i++) 
+    //     {
+    //         arr[i] = random.nextInt();
+    //     }
+    //     return arr;
+    // }
+    
     public static void main(String [] args)
     {
+        // List<Integer> list = CustomSortComparison.createList(Integer.class, n);
+
+        // Integer[] newArr1 = list.toArray(new Integer[list.size()]);
+        // Integer[] newArr2 = list.toArray(new Integer[list.size()]);
+
+        // long startTime;
+        // long endTime;
+
+        // System.out.println("Array size: " + n);
+        // startTime = System.currentTimeMillis();
+        // CustomCollections.sort(newArr1, true, false);
+        // endTime = System.currentTimeMillis();
+
+        // System.out.println("Merge sort: " + (endTime - startTime) + " milliseconds");
+
+        // startTime = System.currentTimeMillis();
+        // CustomCollections.sort(newArr2, false, true);
+        // endTime = System.currentTimeMillis();
+
+        // System.out.println("Insertion sort: " + (endTime - startTime) + " milliseconds");
+
+        
         File dataDir = new File("Data");
         if (!dataDir.exists())
             dataDir.mkdir();
