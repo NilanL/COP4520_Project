@@ -67,7 +67,7 @@ public class CustomCollections<T extends Comparable<T>>
     }
 
     // Determines how to partition array for N number of threads
-    public static <T extends Comparable<T>> int getThreadPartition(T[] array)
+    private static <T extends Comparable<T>> int getThreadPartition(T[] array)
     {
         boolean exact = length % MAX_THREADS == 0;
         int lengthPerThread = 0;
@@ -85,7 +85,7 @@ public class CustomCollections<T extends Comparable<T>>
     }
 
     // Merges sorted partitioned sub arrays
-    public static <T extends Comparable<T>> void mergePartitions(T[] array, int lengthPerThread)
+    private static <T extends Comparable<T>> void mergePartitions(T[] array, int lengthPerThread)
     {
         for (int i = 0; i < length; i += lengthPerThread)
         {
@@ -98,7 +98,7 @@ public class CustomCollections<T extends Comparable<T>>
 
 
     // Typical recursive merge sort
-    public static <T extends Comparable<T>> void mergeSort(T[] array, int begin, int end)
+    private static <T extends Comparable<T>> void mergeSort(T[] array, int begin, int end)
     {
         if (begin < end)
         {
@@ -110,7 +110,7 @@ public class CustomCollections<T extends Comparable<T>>
     }
 
     // Typical iterative insertion sort
-    public static <T extends Comparable<T>> void insertionSort(T arr[])
+    private static <T extends Comparable<T>> void insertionSort(T arr[])
     {
         int n = arr.length;
         for (int i = 1; i < n; ++i) 
@@ -129,7 +129,7 @@ public class CustomCollections<T extends Comparable<T>>
     }
     
     @SuppressWarnings("unchecked")
-    public static <T extends Comparable<T>> void merge(T[] array, int begin, int mid, int end)
+    private static <T extends Comparable<T>> void merge(T[] array, int begin, int mid, int end)
     {
         Object[] temp = new Object [(end - begin) + 1];
          

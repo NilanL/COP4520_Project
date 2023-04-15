@@ -9,8 +9,7 @@ public class CustomSortComparison {
     //public static final int[] arrLengths = {10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
     public static final int[] arrLengths = {10, 100, 1000, 10000, 100000, 1000000, 10000000};
     public static final int[] threadCounts = {1, 2, 3, 4, 5, 6, 7, 8};
-    //public static final Class[] arrTypes = {Character.class, String.class, Short.class, Integer.class, Long.class, Float.class, Long.class};
-    public static final Class[] arrTypes = {Character.class};
+    public static final Class[] arrTypes = {Character.class, String.class, Short.class, Integer.class, Long.class, Float.class, Long.class};
 
     public static<T extends Comparable<T>> double[][][][] compareSorts() {
         double[][][][] results = new double[2][arrTypes.length][arrLengths.length][threadCounts.length];
